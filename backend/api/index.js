@@ -8,6 +8,23 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
+const allowedOrigins = ['https://siil777.github.io', 'http://localhost:3000','http://localhost:5000'];
+
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+
+    next();
+});
+
+
 const conn = mysql.createPool({
     user: 'root',
     host: 'localhost',
@@ -18,16 +35,32 @@ const checkDatabaseConnection = async () => {
     try{
         const connection = await conn.getConnection();
         console.log('connection estabilished successfully!');
+        const [rows] = await conn.query('SELECT*FROM users');
+        console.log('user data', rows);
         connection.release();
     }catch(e){
         console.error('error of connection of the database',e);
     }
 }
 checkDatabaseConnection();
+app.get('/users', (req,res)=>{
+    try{
+        const [users] = conn.query('SELECT*FROM users');
+        res.json(rows);
+    }catch(error){
+        console.error(error);
+        res.status(500).send({message: 'internal server error'})
+    }
+})
+app.post('/', (req,res)=>{
+    res.redirect('/email/register');
+})
 app.post('/email/register', async (req,res)=>{
     const {email, password, username} = req.body;
     try{
         const [userCheck] = await conn.query('SELECT*FROM users WHERE email = ?');
+        const [rows] = await conn.query('SELECT*FROM users');
+        res.json(rows);
         if(userCheck.length>0){
             return res.status(400).json({message: 'email has been already registered'});
         }
