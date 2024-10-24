@@ -10,7 +10,7 @@ const Head = ({ signup }) => {
                 <div></div>
                 <Signup signup={signup} />
             </nav>
-            <div>
+            <div className='d-flex justify-content-center'>
                 <Routes>
                     <Route path='/form' element={<SignUpForm />} />
                 </Routes>
