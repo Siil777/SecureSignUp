@@ -5,7 +5,7 @@ const Entry = () => {
     const [loading, setLoading] = useState(false);
     useEffect(()=>{
         fetch('http://localhost:5000/users',{
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }

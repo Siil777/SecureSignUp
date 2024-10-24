@@ -43,9 +43,9 @@ const checkDatabaseConnection = async () => {
     }
 }
 checkDatabaseConnection();
-app.get('/users', (req,res)=>{
+app.get('/users', async (req,res)=>{
     try{
-        const [users] = conn.query('SELECT*FROM users');
+        const [rows] = await conn.query('SELECT*FROM users');
         res.json(rows);
     }catch(error){
         console.error(error);
