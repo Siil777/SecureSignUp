@@ -1,36 +1,29 @@
 import { useState,useEffect } from "react";
+import FormRegister from './signupforms.js';
 
 const Entry = () => {
-    const [users, setRows] = useState([]);
-    const [loading, setLoading] = useState(false);
-    useEffect(()=>{
-        fetch('http://localhost:5000/users',{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+        const registerUser = async(email,username,password)=>{
+            try{
+                const response = await fetch('http://localhost:5000/email/register',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({email,username,password})
+    
+                })
+                const data = await response.json();
+                if(!response.ok){
+                    throw new Error(data.message, 'fetch error')
+                }
+                console.log('Registration successfull!', data);
+            }catch(e){
+                console.error(e);
             }
-        })
-        .then((response)=>response.json())
-        .then((data)=>{
-            console.log(data)
-            setRows(data);
-            setLoading(false);
-        })
-        .catch((error)=>
-        console.log('fetch errpr', error));
-        setLoading(false);
-    }, []);
+    }
     return(
-        <div>
-            {loading ? (
-                <p>Loading...</p>
-            ):
-            <ul>
-                {users.map(user=>(
-                    <li key={user.id}>{user.username}</li>
-                ))}
-            </ul>
-            }
+        <div className="d-flex justify-content-center">
+            <FormRegister onRegister={registerUser}></FormRegister>
         </div>
     )
 }
