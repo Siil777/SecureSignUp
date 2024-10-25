@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 const Head = ({ signup }) => {
     return (
         <div className='content'>
-            <nav className="navbar navbar-light bg-light">
+            <nav className="navbar" style={{backgroundColor: "#1a237e"}}>
                 <div></div>
                 <Signup signup={signup} />
             </nav>

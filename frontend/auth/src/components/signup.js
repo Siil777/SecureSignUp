@@ -8,7 +8,7 @@ const Signup = () => {
         navigate('/form');
     }
     return(
-        <Button onClick={handleHistory} color='secondary'>
+        <Button onClick={handleHistory} sx={{color: 'white'}}>
             Sign up
         </Button>
     )
