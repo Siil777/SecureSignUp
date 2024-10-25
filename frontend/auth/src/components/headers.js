@@ -3,7 +3,7 @@ import SignUpForm from './entries.js';
 import { Route, Routes } from 'react-router-dom';
 const Head = ({ signup }) => {
     return (
-        <div>
+        <div className='content'>
             <nav className="navbar navbar-light bg-light">
                 <div></div>
                 <Signup signup={signup} />

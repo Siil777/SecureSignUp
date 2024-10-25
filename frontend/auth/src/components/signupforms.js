@@ -12,7 +12,7 @@ const SignUpForm = ({ onRegister }) => {
         onRegister(email, password, username);
     }
     return (
-        <div className="col-4" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div className="col-4 centered" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
             <form onSubmit={handleSubmit}>
                 <FormControl margin="normal">
                     <InputLabel htmlFor='email'>Email address</InputLabel>
