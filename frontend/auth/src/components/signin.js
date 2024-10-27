@@ -10,7 +10,7 @@ const SignIn = () => {
     }
 
     return(
-        <Button onClick={handleRoute} color="white">
+        <Button onClick={handleRoute} sx={{color: 'white'}}>
             Sign in
         </Button>
     )

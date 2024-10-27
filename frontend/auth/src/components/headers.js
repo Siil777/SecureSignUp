@@ -1,12 +1,17 @@
 import Signup from './signup.js';
 import SignUpForm from './entries.js';
 import { Route, Routes } from 'react-router-dom';
-const Head = ({ signup }) => {
+import Signin from './signin.js';
+const Head = ({ signup, signin }) => {
     return (
         <div className='content'>
-            <nav className="navbar" style={{backgroundColor: "#1a237e"}}>
-                <div></div>
+            <nav className="navbar d-flex justify-content-end" style={{backgroundColor: "#1a237e"}}>
+                <div>
                 <Signup signup={signup} />
+                </div>
+                <div>
+                <Signin signin={signin} />   
+                </div>
             </nav>
             <div className='d-flex justify-content-center'>
                 <Routes>

@@ -7,7 +7,7 @@ const SignUpForm = ({ onRegister }) => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
-    const [showAlert, setShowAlert] = useState(true);
+    const [showAlert, setShowAlert] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +18,6 @@ const SignUpForm = ({ onRegister }) => {
         setShowAlert(false);
     }, 3000);
 /*     const handleAlert = () => {
-        
     } */
     return (
         <div className="col-4 centered">
