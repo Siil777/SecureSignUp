@@ -1,6 +1,7 @@
 import Signup from './signup.js';
 import SignUpForm from './entries.js';
 import { Route, Routes } from 'react-router-dom';
+import SignInForm from './signinforms.js';
 import Signin from './signin.js';
 const Head = ({ signup, signin }) => {
     return (
@@ -16,6 +17,7 @@ const Head = ({ signup, signin }) => {
             <div className='d-flex justify-content-center'>
                 <Routes>
                     <Route path='/form' element={<SignUpForm />} />
+                    <Route path='/logform' element={<SignInForm />} />
                 </Routes>
             </div>
         </div>

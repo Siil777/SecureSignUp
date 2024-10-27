@@ -1,8 +1,5 @@
 import { Alert } from "@mui/material";
-
 const Alerts = ({ servity, message }) => {
-
-
     return (
         <div >
             <Alert servity={servity}>
@@ -10,6 +7,5 @@ const Alerts = ({ servity, message }) => {
             </Alert>
         </div>
     )
-
 }
 export default Alerts;
