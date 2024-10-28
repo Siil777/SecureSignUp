@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+
+
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -87,6 +91,29 @@ app.post('/email/register', async (req, res) => {
         res.status(500).json({ message: 'internal server error' });
     }
 });
+app.post('/email/login', async (req,res)=>{
+    const {email, password} = req.body;
+
+    try{
+        const [userCheck] = await conn.query('SELECT*FROM users WHERE email = ?', [email])
+        if(userCheck.length>0){
+            return res.status(400).json({message: 'user with this email has been already registered!'})
+        }else if(userCheck.length===0){
+            return res.status(422).json({})
+        }
+        const passwordMatch = await bcrypt.compare(password, user.password_hash)
+        if(!passwordMatch){
+            return res.status(400).json({message: 'Invalid email or login'})
+        }
+        const token = jwt.sign({id: user.id, email: user.email}, JWT_SECRET, {expiresIn: '1h'});
+
+        res.status(200).json({message: 'log in successfull', token})
+
+    }catch(e){
+        console.error(e);
+        res.status(500).json({message: 'Internal server error'});
+    }
+})
 app.use(express.urlencoded({ extended: true }));
 app.listen(port, () => {
     console.log(`app running on port ${port}`);

@@ -69,7 +69,7 @@ const Footer = () => {
             align="center"
             sx={{ opacity: 0.7 }}
           >
-            © {new Date().getFullYear()} Your Company Name. All rights reserved.
+            © {new Date().getFullYear()} Product of Education 2024.
           </Typography>
       </Container>
     </FooterContainer>

@@ -1,4 +1,6 @@
 import React from 'react';
+import Reg from './registers.js';
+import { Route, Routes } from 'react-router-dom';
 import {
   MDBContainer,
   MDBInput,
@@ -6,10 +8,8 @@ import {
   MDBBtn,
   MDBIcon
 }
-
 from 'mdb-react-ui-kit';
-
-function Login() {
+function Login({registration}) {
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
 
@@ -24,7 +24,7 @@ function Login() {
       <MDBBtn className="mb-4">Sign in</MDBBtn>
 
       <div className="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
+        <p>Not a member?</p> <Reg registration={registration}></Reg>
         <p>or sign up with:</p>
 
         <div className='d-flex justify-content-between mx-auto' style={{width: '40%'}}>
