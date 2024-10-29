@@ -1,7 +1,7 @@
 import Signup from './signup.js';
 import SignUpForm from './entries.js';
 import { Route, Routes } from 'react-router-dom';
-import SignInForm from './signinforms.js';
+import SignInForm from './entrysignin.js';
 import Signin from './signin.js';
 const Head = ({ signup, signin }) => {
     return (

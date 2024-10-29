@@ -32,11 +32,9 @@ function Login({ registration, onLogin }) {
 
       <div className="d-flex justify-content-between mx-3 mb-4">
         <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-        <div className='ms-5'>
-          <div className='d-flex flex-column'>
+        <div className='custom-flex'>
           <a href="!#">Forgot password?</a>
           <Reg registration={registration}></Reg>
-          </div>
         </div>
       </div>
 
