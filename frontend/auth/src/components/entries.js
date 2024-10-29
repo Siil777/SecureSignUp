@@ -3,7 +3,7 @@ import FormRegister from './signupforms.js';
 
 const Entry = () => {
         const registerUser = async(email,password,username)=>{
-            console.log('sending data:', email, password, username )
+            console.log('sending data:', email, password)
             try{
                 const response = await fetch('http://localhost:5000/email/register',{
                     method: 'POST',
