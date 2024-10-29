@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'api')));
 
 const allowedOrigins = ['https://siil777.github.io', 'http://localhost:3000', 'http://localhost:5000'];
 
@@ -92,29 +92,36 @@ app.post('/email/register', async (req, res) => {
         res.status(500).json({ message: 'internal server error' });
     }
 });
-app.post('/email/login', async (req,res)=>{
-    const {email, password} = req.body;
+app.post('/email/login', async (req, res) => {
+    try {
+        console.log('Incoming request body:', req.body);
+        const { email, password } = req.body;
 
-    try{
-        const [userCheck] = await conn.query('SELECT*FROM users WHERE email = ?', [email])
-        if(userCheck.length>0){
-            return res.status(400).json({message: 'user with this email has been already registered!'})
-        }else if(userCheck.length===0){
-            return res.status(422).json({message: 'Syntax of the request'});
+       if (!email || !password) {
+            return res.status(422).json({ message: 'Email and password are required' });
         }
-        const passwordMatch = await bcrypt.compare(password, user.password_hash)
-        if(!passwordMatch){
-            return res.status(400).json({message: 'Invalid email or login'})
+        const [users] = await conn.query('SELECT * FROM users WHERE email = ?', [email]);
+        console.log('Users fetched from database:', users);
+        if (users.length === 0) {
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign({id: user.id, email: user.email}, JWT_SECRET, {expiresIn: '1h'});
 
-        res.status(200).json({message: 'log in successfull', token})
+        const user = users[0];
+        const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+        console.log('Password validation result:', isPasswordValid);
 
-    }catch(e){
-        console.error(e);
-        res.status(500).json({message: 'Internal server error'});
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        return res.status(200).json({ message: 'Login successful', user });
+
+    } catch (error) {
+        console.error('Error in /email/login:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.listen(port, () => {
     console.log(`app running on port ${port}`);
