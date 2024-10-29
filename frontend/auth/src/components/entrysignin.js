@@ -14,11 +14,12 @@ const Entries = () => {
             })
             const data = await response.json();
             if (!response.ok) {
+                console.error('Login error', data.message)
                 throw new Error(data.message, 'fetch error')
             }
             console.log('log in successfull!', data);
         } catch (e) {
-            console.error(e);
+            console.error(e.message);
 
         }
     }

@@ -74,6 +74,7 @@ app.get('/users', async (req, res) => {
 }) */
 app.post('/email/register', async (req, res) => {
     const { email, password, username } = req.body;
+    console.log(email,password,username);
     try {
         const [userCheck] = await conn.query('SELECT*FROM users WHERE email = ?', [email]);
         if (userCheck.length > 0) {
@@ -99,7 +100,7 @@ app.post('/email/login', async (req,res)=>{
         if(userCheck.length>0){
             return res.status(400).json({message: 'user with this email has been already registered!'})
         }else if(userCheck.length===0){
-            return res.status(422).json({})
+            return res.status(422).json({message: 'Syntax of the request'});
         }
         const passwordMatch = await bcrypt.compare(password, user.password_hash)
         if(!passwordMatch){

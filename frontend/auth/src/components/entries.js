@@ -2,14 +2,15 @@ import { useState,useEffect } from "react";
 import FormRegister from './signupforms.js';
 
 const Entry = () => {
-        const registerUser = async(email,username,password)=>{
+        const registerUser = async(email,password,username)=>{
+            console.log('sending data:', email, password, username )
             try{
                 const response = await fetch('http://localhost:5000/email/register',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({email,username,password})
+                    body: JSON.stringify({email,password, username})
     
                 })
                 const data = await response.json();
