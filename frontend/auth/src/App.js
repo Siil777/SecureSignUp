@@ -6,8 +6,8 @@ import Forms from './components/signinforms.js'
 function App() {
   return (
     <div className="App">
-      <Headers />
-      <Footer />
+        <Headers />
+        <Footer />
     </div>
   );
 }

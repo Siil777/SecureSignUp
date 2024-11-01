@@ -3,6 +3,7 @@ const path = require('path');
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 
 
@@ -12,21 +13,13 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'api')));
 
-const allowedOrigins = ['https://siil777.github.io', 'http://localhost:3000', 'http://localhost:5000'];
 
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader("Access-Control-Allow-Origin", origin);
-    }
 
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
+const allowedOrigins = ['http://localhost:3000'];
 
-    next();
-});
+app.use(cors(allowedOrigins));
+
+
 let conn;
 const initializeDB = async () => {
     try{
