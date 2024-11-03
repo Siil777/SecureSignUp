@@ -131,6 +131,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose(); 
 const port = process.env.PORT || 5000;
 const app = express();
 
@@ -169,7 +170,7 @@ app.get('/',((req, res) => {
 }));
 
 
-app.post('/email/register', allowCors(async (req, res) => {
+app.post('/email/register', async (req, res) => {
     console.log('registered response received', req.body);
     const { email, password, username } = req.body;
 
@@ -197,10 +198,10 @@ app.post('/email/register', allowCors(async (req, res) => {
         console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     };
-}));
+});
 
 
-app.post('/email/login', allowCors(async (req, res) => {
+app.post('/email/login', async (req, res) => {
 
     const { email, password } = req.body;
 
@@ -222,7 +223,7 @@ app.post('/email/login', allowCors(async (req, res) => {
         console.error('Error in /email/login:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-}));
+});
 
 process.on('SIGINT', () => {
     db.close((err) => {
@@ -233,6 +234,14 @@ process.on('SIGINT', () => {
         process.exit(0);
     });
 });
+
+app.get('*', (req, res) => {
+    res.status(404).json({ message: 'Route not found' });
+});
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
+
 
 app.get('*', (req, res) => {
     res.status(404).json({ message: 'Route not found' });

@@ -6,7 +6,7 @@ const Entry = () => {
         console.log('sending data:', { email, password, username });
 
         try {
-            const response = await fetch('http://localhost:5000/email/register', {
+            const response = await fetch('https://pavelivanovthk@bitbucket.org/backendforauth/api/email/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
