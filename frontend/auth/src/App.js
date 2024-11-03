@@ -2,13 +2,23 @@ import logo from './logo.svg';
 import './App.css';
 import Headers from './components/headers.js';
 import Footer from './components/footers.js';
-import Forms from './components/signinforms.js'
+import bg from './img/neon.jpg';
+import { Box } from '@mui/material';
+import { useEffect } from 'react';
 function App() {
   return (
-    <div className="App">
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        flexDirection: "column"
+      }}
+    >
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <Headers />
-        <Footer />
-    </div>
+      </Box>
+      <Footer />
+    </Box>
   );
 }
 

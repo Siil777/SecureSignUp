@@ -1,37 +1,21 @@
 const express = require('express');
+const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');   
-
-const allowedOrigins = ['https://siil777.github.io', 'http://localhost:3000', 'http://localhost:5000'];
-
 const app = express();
-app.use(express.json()); 
 
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader("Access-Control-Allow-Origin", origin);
+const allowCors = fn => async (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', 'https://siil777.github.io');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
     }
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-
-    // Handle preflight requests
-    if (req.method === "OPTIONS") {
-        return res.sendStatus(204); // No Content
-    }
-    next();
-});
-
-const corsOptions = {
-    origin: 'http://localhost:3000', 
-    methods: ['GET', 'POST'], 
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-apikey'], 
-    credentials: false, 
-  };
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors(corsOptions));
+    return await fn(req, res);
+};
 const db = new sqlite3.Database('users.db', (err) => {
     if (err) {
         console.error('Error opening database:', err.message);
@@ -45,8 +29,15 @@ const db = new sqlite3.Database('users.db', (err) => {
     }
 });
 
-app.post('/email/register', async (req, res) => {
-    console.log('registered response received', req.body);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'api')));
+
+app.get('/', allowCors((req, res) => {
+    res.send('app!');
+}));
+
+app.post('/email/register', allowCors(async (req, res) => {
     const { email, password, username } = req.body;
 
     try {
@@ -75,9 +66,9 @@ app.post('/email/register', async (req, res) => {
         console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
+}));
 
-app.post('/email/login', async (req, res) => {
+app.post('/email/login', allowCors(async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -88,32 +79,24 @@ app.post('/email/login', async (req, res) => {
             });
         });
 
-        if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+        if (!user) return res.status(401).json({ message: 'Invalid email or password' });
 
-        const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-        if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
 
-        res.status(200).json({ message: 'Login successful' });
-    } catch (error) {
-        console.error('Error in /email/login:', error);
+        const match = await bcrypt.compare(password, user.password_hash);
+        if (!match) return res.status(401).json({ message: 'Invalid email or password' });
+        res.status(200).json({
+            message: 'Login successful!',
+            user: { id: user.id, email: user.email, username: user.username }
+        });
+    } catch (e) {
+        console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     }
-});
-process.on('SIGINT', () => {
-    db.close((err) => {
-        if (err) {
-            console.error('Error closing database:', err.message);
-        }
-        console.log('Database connection closed.');
-        process.exit(0);
-    });
-});
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+}));
 
 module.exports = app;
 
-    
+
+
+
  

@@ -32,7 +32,7 @@ const SocialIcon = styled(IconButton)(({ theme }) => ({
   margin: "0 8px"
 }));
 
-const Footer = () => {
+const Footers = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -108,7 +108,7 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Footers;
 
 
 import github from '../img/github.png';

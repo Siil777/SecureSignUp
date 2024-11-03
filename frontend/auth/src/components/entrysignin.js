@@ -14,7 +14,7 @@ const Entries = () => {
     const [userData, setUserdata] = useState(null);
     const LogInUser = async (email, password) => {
         try {
-            const response = await fetch('http://localhost:5000/email/login', {
+            const response = await fetch('https://backend-tau-ecru-85.vercel.app/email/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

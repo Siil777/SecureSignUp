@@ -241,3 +241,11 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 module.exports = app;
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-apikey'],
+    credentials: true, 
+};
+
+app.use(cors(corsOptions));
