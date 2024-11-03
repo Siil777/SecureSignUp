@@ -6,8 +6,11 @@ const Entry = () => {
         console.log('sending data:', { email, password, username });
 
         try {
-            const response = await fetch('https://siil777.github.io/email/register', {
+            const response = await fetch('http://localhost:5000/email/register', {
                 method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
                 body: JSON.stringify({ email, password, username })
             });
 
