@@ -3,19 +3,16 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
 const app = express();
+const cors = require('cors');
 
-const allowCors = fn => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', 'https://siil777.github.io');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-    return await fn(req, res);
+const corsOptions = {
+    origin: 'https://siil777.github.io',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-apikey'],
+    credentials: true, 
 };
+
+app.use(cors(corsOptions));
 const db = new sqlite3.Database('users.db', (err) => {
     if (err) {
         console.error('Error opening database:', err.message);
@@ -37,7 +34,7 @@ app.get('/', allowCors((req, res) => {
     res.send('app!');
 }));
 
-app.post('/email/register', allowCors(async (req, res) => {
+app.post('/email/register', async (req, res) => {
     const { email, password, username } = req.body;
 
     try {
@@ -66,9 +63,9 @@ app.post('/email/register', allowCors(async (req, res) => {
         console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     }
-}));
+});
 
-app.post('/email/login', allowCors(async (req, res) => {
+app.post('/email/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -92,7 +89,7 @@ app.post('/email/login', allowCors(async (req, res) => {
         console.error(e);
         res.status(500).json({ message: 'Internal server error' });
     }
-}));
+});
 
 module.exports = app;
 
