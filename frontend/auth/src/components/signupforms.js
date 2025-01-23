@@ -21,21 +21,21 @@ const SignUpForm = ({ onRegister }) => {
     } */
     return (
         <div className="col-4 centered">
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
+            <form className="sm" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', color: 'white'}}>
                 <FormControl margin="normal">
-                    <InputLabel htmlFor='email'>Email address</InputLabel>
+                    <InputLabel htmlFor='email' style={{ color: 'white'}}>Email address</InputLabel>
                     <Input id="email" type="email" aria-describedby="text" value={email} onChange={(e) => setEmail(e.target.value)} required></Input>
-                    <FormHelperText id='text'>We never share your email before it profitable for us</FormHelperText>
+                    <FormHelperText id='text' style={{ color: 'white'}}>We never share your email before it profitable for us</FormHelperText>
                 </FormControl>
                 <FormControl margin="normal">
-                    <InputLabel htmlFor='username'>Username</InputLabel>
+                    <InputLabel htmlFor='username' style={{ color: 'white'}}>Username</InputLabel>
                     <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} required></Input>
                 </FormControl>
                 <FormControl margin="normal">
-                    <InputLabel htmlFor='password'>Password</InputLabel>
+                    <InputLabel htmlFor='password' style={{ color: 'white'}}>Password</InputLabel>
                     <Input id="password" value={password} onChange={(e) => setPassword(e.target.value)} required></Input>
                 </FormControl>
-                <Button type="submit" color="secondary">Register</Button>
+                <Button type="submit" color="white">Register</Button>
                 {showAlert && (
                     <AlertComponent servity='success' message='Registration successfull!' />
                 )}

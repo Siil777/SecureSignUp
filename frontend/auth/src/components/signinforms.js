@@ -9,40 +9,45 @@ import {
   MDBBtn,
   MDBIcon
 }
-from 'mdb-react-ui-kit';
+  from 'mdb-react-ui-kit';
 function Login({ registration, onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSignIn = () => {
-    if(onLogin){
+    if (onLogin) {
       console.log('btn clicked!')
-      if(onLogin){
+      if (onLogin) {
         console.log('Calling email and password', email, password)
-              onLogin(email, password);
+        onLogin(email, password);
       }
     }
   }
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column">
-      <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' value={email} onChange={(e
-      )=>setEmail(e.target.value)} />
-      <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'  value={password} onChange={(e
+      <div style={{ color: 'white' }}>
+        <h6>Email address</h6>
+        <MDBInput wrapperClass='mb-4' id='form1' type='email' value={email} onChange={(e
+        ) => setEmail(e.target.value)} />
+      </div>
+      <div style={{ color: 'white' }}>
+      <h6>Password</h6>
+        <MDBInput wrapperClass='mb-4' id='form2' type='password' value={password} onChange={(e
+        ) => setPassword(e.target.value)} />
+      </div>
 
-      )=>setPassword(e.target.value)}/>
-
-      <div className="d-flex justify-content-between mx-3 mb-4">
+      <div className="d-flex justify-content-between mx-3 mb-4" style={{ color: 'white' }}>
         <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
         <div className='ms-5'>
-          <div className='d-flex flex-column'>
-          <a href="!#">Forgot password?</a>
-          <Reg registration={registration}></Reg>
+          <div className='d-flex flex-column' >
+            <a href="!#" style={{ color: 'white' }}>Forgot password?</a>
+            <Reg registration={registration}></Reg>
           </div>
         </div>
       </div>
 
       <MDBBtn className="mb-4" onClick={handleSignIn}>Sign in</MDBBtn>
 
-      <div className="text-center">
+      <div style={{ color: 'white' }} className="text-center">
         <p>Not a member?</p>
         <p>or sign up with:</p>
 

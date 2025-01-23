@@ -7,20 +7,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-/* html {
-    position: relative;
-    display: flex;
-    justify-content: center;
+@media screen and (max-width: 768px) { 
+    .sm {
+        position: absolute;
+        bottom: 35%;
+        width: 100%;
+      
+        
+    }
+
 }
-html::before {
-    content: "";
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    top: 0;
-    left: 0;
-    background-repeat: no-repeat;
-    background-image: url('./style.scss');
-    background-size: cover;
-    opacity: 0;
-} */

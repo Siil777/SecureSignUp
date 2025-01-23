@@ -6,7 +6,7 @@ const Entry = () => {
         console.log('sending data:', { email, password, username });
 
         try {
-            const response = await fetch('https://pavelivanovthk@bitbucket.org/backendforauth/api/email/register', {
+            const response = await fetch('https://auth-production-38c5.up.railway.app/email/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
@@ -38,7 +38,7 @@ const Entry = () => {
         console.error(error)
     }) */
      return(
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center sm">
             <FormRegister onRegister={registerUser}></FormRegister>
         </div>
     ) 

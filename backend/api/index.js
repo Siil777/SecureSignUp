@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 const sqlite3 = require('sqlite3').verbose(); 
 const port = process.env.PORT || 5000;
+
 const app = express();
 
 const allowedOrigins = ['https://siil777.github.io', 'http://localhost:3000'];

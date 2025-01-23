@@ -6,7 +6,7 @@ const Reg = () => {
         navigate('/form');
     }
     return(
-        <Button onClick={handleHistory} sx={{color: 'primary'}}>
+        <Button style={{ color: 'white'}} onClick={handleHistory} sx={{color: 'primary'}}>
             Register
         </Button>
     )
