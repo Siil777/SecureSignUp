@@ -20,7 +20,7 @@ const SignUpForm = ({ onRegister }) => {
 /*     const handleAlert = () => {
     } */
     return (
-        <div className="col-4 centered">
+        <div className="col-10 col-md-4 centered">
             <form className="sm" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', color: 'white'}}>
                 <FormControl margin="normal">
                     <InputLabel htmlFor='email' style={{ color: 'white'}}>Email address</InputLabel>
